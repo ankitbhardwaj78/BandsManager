@@ -79,3 +79,12 @@ const Band = db.define('bands', {
     }
 })
 Band.belongsTo(User);
+
+
+db.sync()
+    .then(() => console.log("Database has been synced"))
+    .catch((err) => console.error("Error creating database"))
+
+exports = module.exports = {
+    User,Band
+}
