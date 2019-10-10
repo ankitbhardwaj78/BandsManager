@@ -7,7 +7,7 @@ app.use(session({ secret: 'Ankit', saveUninitialized: true, resave: false }));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/api', require('./routes').route)
+app.use('/', require('./routes').route)
 
 app.set('port', process.env.PORT || 3000)
 app.listen(app.get('port'), function () {
