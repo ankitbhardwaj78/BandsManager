@@ -86,7 +86,7 @@ route.patch('/edit/:bandId', (req, res) => {
 
         })
         .catch(err => {
-            res.status(500).json({ error: "some error " });
+            res.status(500).json({ error: "some error occurred" });
         });
 })
 
