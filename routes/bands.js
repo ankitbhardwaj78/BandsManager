@@ -80,13 +80,13 @@ route.patch('/edit/:bandId', (req, res) => {
                 message: "band updated",
                 request: {
                     type: "GET",
-                    url: "http://localhost:3000/bands/" + id
+                    url: "http://localhost:3000/bands/"
                 }
             });
 
         })
         .catch(err => {
-            res.status(500).json({ error: "some error occured" });
+            res.status(500).json({ error: "some error " });
         });
 })
 
