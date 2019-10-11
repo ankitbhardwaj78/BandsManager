@@ -76,7 +76,7 @@ route.post('/:Id', (req, res) => {
 
 
 route.get('/edit/:bandId/:bandName', (req, res) => {
-    res.render("editBand",{ id: req.params.bandId,name :req.params.bandName});
+    res.render("editBand",{ id: req.params.bandId,name :req.params.bandName,user:req.session.user});
 });
 
 
