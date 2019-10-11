@@ -56,7 +56,7 @@ route.post('/signin', (req, res) => {
 
 })
 
-route.post('/', (req, res) => {
+route.post('/signup', (req, res) => {
     // We expect the req to have name,email,password,address,college,phn number in it
     // We will create a new user 
     console.log("in post");
@@ -69,7 +69,7 @@ route.post('/', (req, res) => {
         dob: req.body.dob,
         password: bcrypt.hashSync(req.body.password, 10)
     }).then((user) => {
-        res.status(201).send(user)
+        res.redirect('/users/signin');
     }).catch((err) => {
         console.log(err);
 

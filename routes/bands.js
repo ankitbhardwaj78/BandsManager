@@ -10,7 +10,8 @@ route.get('/', (req, res) => {
             }
         })
             .then((bands) => {
-                res.render('home', { bands });
+                const user = req.session.user;
+                res.render('home', { bands ,user });
                 // res.status(200).send(bands);
             })
             .catch((err) => {
