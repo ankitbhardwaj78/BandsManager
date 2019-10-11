@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 
 route.get('/signin', (req, res) => {
     if (req.session.user) {
-        res.render('home');
+        res.redirect('/bands');
     } else {
         res.render("login");
     }
@@ -28,10 +28,10 @@ route.post('/signin', (req, res) => {
                         error: { message: 'Invalid login credentials' }
                     });
                 }
-               console.log(users["dataValues"].id);
+                console.log(users["dataValues"].id);
                 req.session.user = users;
                 res.redirect('/bands/');
-               // res.render('home');
+                // res.render('home');
                 // var token = jwt.sign({ user: users }, 'secret', { expiresIn: 720000 });
                 // res.status(200).send({
                 //     message: 'Successfully logged in',
@@ -86,9 +86,7 @@ route.get('/logout', function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.status(200).send({
-                msg: "successfully logged out"
-            })
+           res.render("login");
         }
     });
 })
@@ -105,6 +103,10 @@ route.get('/isloggedin', function (req, res) {
             done: false,
         })
 })
+
+route.get('/signup', (req, res) => {
+    res.render('Signup');
+});
 
 
 exports = module.exports = route

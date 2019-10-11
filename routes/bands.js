@@ -37,7 +37,7 @@ route.post('/create', (req, res) => {
         name: req.body.name,
         userId: parseInt(req.session.user.id)
     }).then((band) => {
-        res.status(201).send(band)
+        res.redirect('/bands');
     }).catch((err) => {
         console.log(err);
 
@@ -60,7 +60,7 @@ route.post('/:Id', (req, res) => {
             }
         })
             .then((band) => {
-                res.send("removed successfully");
+               res.redirect('/bands')
             })
             .catch((err) => {
                 res.send("some error occured!!!")
@@ -86,14 +86,7 @@ route.post('/edit/:bandId', (req, res) => {
     updateOps["name"] = req.body.name;
     Band.update(updateOps, { where: { id: req.params.bandId } })
         .then(result => {
-            res.status(200).json({
-                message: "band updated",
-                request: {
-                    type: "GET",
-                    url: "http://localhost:3000/bands/"
-                }
-            });
-
+           res.redirect('/bands');
         })
         .catch(err => {
             res.status(500).json({ error: "some error occurred" });
