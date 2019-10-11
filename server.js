@@ -3,6 +3,8 @@ var session = require('express-session');
 
 const app = express();
 
+
+app.set("view engine", "hbs");
 app.use(session({ secret: 'Ankit', saveUninitialized: true, resave: false }));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

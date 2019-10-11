@@ -10,7 +10,8 @@ route.get('/', (req, res) => {
             }
         })
             .then((bands) => {
-                res.status(200).send(bands);
+                res.render('home', { bands });
+                // res.status(200).send(bands);
             })
             .catch((err) => {
                 console.log(err);
@@ -48,12 +49,14 @@ route.post('/create', (req, res) => {
 })
 
 
-route.delete('/delete', (req, res) => {
+route.post('/:Id', (req, res) => {
+    console.log("yooo");
+    console.log(req.params.Id);
     if (req.session.user) {
         Band.destroy({
             where: {
                 userId: req.session.user.id,
-                name: req.body.name,
+                id: req.params.Id
             }
         })
             .then((band) => {
@@ -71,7 +74,14 @@ route.delete('/delete', (req, res) => {
 })
 
 
-route.patch('/edit/:bandId', (req, res) => {
+route.get('/edit/:bandId/:bandName', (req, res) => {
+    res.render("editBand",{ id: req.params.bandId,name :req.params.bandName});
+});
+
+
+route.post('/edit/:bandId', (req, res) => {
+    console.log("yoooooooooop");
+    console.log(req.body.name);
     const updateOps = {};
     updateOps["name"] = req.body.name;
     Band.update(updateOps, { where: { id: req.params.bandId } })

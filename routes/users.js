@@ -3,13 +3,23 @@ const route = require('express').Router()
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
+route.get('/signin', (req, res) => {
+    if (req.session.user) {
+        res.render('home');
+    } else {
+        res.render("login");
+    }
+});
+
 route.post('/signin', (req, res) => {
+    console.log(req.body);
     User.findOne({
         where: {
             email: req.body.email
         }
     })
         .then((users) => {
+            console.log("hell");
             if (users) {
                 if (!bcrypt.compareSync(req.body.password, users.password)) {
                     req.session.user = null;
@@ -18,18 +28,19 @@ route.post('/signin', (req, res) => {
                         error: { message: 'Invalid login credentials' }
                     });
                 }
-                console.log(users["dataValues"].id);
+               console.log(users["dataValues"].id);
                 req.session.user = users;
+                res.redirect('/bands/');
+               // res.render('home');
                 // var token = jwt.sign({ user: users }, 'secret', { expiresIn: 720000 });
-                res.status(200).send({
-                    message: 'Successfully logged in',
-                    //token: token,
-                    userId: users["dataValues"].id
-                });
+                // res.status(200).send({
+                //     message: 'Successfully logged in',
+                //     //token: token,
+                //     userId: users["dataValues"].id
+                // });
             }
 
-            else
-            {
+            else {
                 req.session.user = null;
                 res.status(500).send({
                     error: "Invalid email or password"
@@ -83,17 +94,16 @@ route.get('/logout', function (req, res) {
 })
 
 route.get('/isloggedin', function (req, res) {
-    if(req.session.user)
-    {
+    if (req.session.user) {
         res.send({
-            done:true,
-            name:req.session.user.name
+            done: true,
+            name: req.session.user.name
         })
     }
     else
-    res.send({
-        done:false,
-    })
+        res.send({
+            done: false,
+        })
 })
 
 
